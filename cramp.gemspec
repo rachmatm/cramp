@@ -14,7 +14,7 @@ Gem::Specification.new do |s|
 
   s.add_dependency('activesupport',   '~> 3.1.0')
   s.add_dependency('rack',            '~> 1.3.2')
-  s.add_dependency('eventmachine',    '~> 1.0.0.beta.4')
+  s.add_dependency('eventmachine',    '~> 1.0.0.rc.4')
   s.add_dependency('faye-websocket',  '~> 0.3.0')
   s.add_dependency('thor',            '~> 0.14.6')
 
