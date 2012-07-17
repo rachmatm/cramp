@@ -44,11 +44,32 @@ module Cramp
         status, headers = respond_to?(:respond_with, true) ? respond_with : [200, {'Content-Type' => 'text/html'}]
         [status, headers.merge(self.default_sse_headers)]
       when :chunked
+#        status, headers = respond_to?(:respond_with, true) ? respond_with : [200, {}]
+#
+#        headers = headers.merge(self.default_chunked_headers)
+#        headers['Content-Type'] ||= 'text/html'
+#        headers['Cache-Control'] ||= 'no-cache'
+
+
         status, headers = respond_to?(:respond_with, true) ? respond_with : [200, {}]
 
-        headers = headers.merge(self.default_chunked_headers)
-        headers['Content-Type'] ||= 'text/html'
-        headers['Cache-Control'] ||= 'no-cache'
+        headers.merge!({
+          'Cache-Control' => 'no-cache, no-store, must-revalidate, pre-check=0, post-check=0',
+          'Content-Encoding' => 'deflate',
+          'Content-Type' => 'application/json;charset=utf-8',
+          'Date' => 'Tue, 17 Jul 2012 06:26:49 GMT',
+          'Expires' => 'Tue, 31 Mar 1981 05:00:00 GMT',
+          'Last-Modified' => 'Tue, 17 Jul 2012 06:26:49 GMT',
+          'Pragma' => 'no-cache',
+          'Server' => 'tfe',
+          'X-Firefox-Spdy' => '1',
+          'x-frame-options' => 'SAMEORIGIN',
+          'x-ratelimit-class' => 'api',
+          'x-ratelimit-limit' => '150',
+          'x-ratelimit-remaining' => '148',
+          'x-ratelimit-reset' => '1342509997',
+          'x-transaction' => '9ae86ab649b8cf4c'
+        })
 
         [status, headers]
       else
